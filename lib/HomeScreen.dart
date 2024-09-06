@@ -18,19 +18,27 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       body: BlocBuilder<ProductBloc, ProductState>(
           builder: (context, state) {
-            return ListView.builder(
-              itemCount: state.plist!.length,
-                itemBuilder: (BuildContext context, int index)
-                {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage('${state.plist![index].thumbnail}'),
-                    ),
-                    title: Text('${state.plist![index].title}'),
-                    subtitle: Text('${state.plist![index].price}'),
-                  );
-                }
-            );
+            if (state.plist!.length == null)
+              {
+                return CircularProgressIndicator();
+              }
+            else
+              {
+                return ListView.builder(
+                    itemCount: state.plist!.length,
+                    itemBuilder: (BuildContext context, int index)
+                    {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage('${state.plist![index].thumbnail}'),
+                        ),
+                        title: Text('${state.plist![index].title}'),
+                        subtitle: Text('${state.plist![index].price}'),
+                      );
+                    }
+                );
+              }
+
           }
       ),
     );
